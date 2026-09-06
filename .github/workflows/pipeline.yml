@@ -1,0 +1,37 @@
+name: Pipeline ETL VBG
+
+on:
+  # Botão manual no separador Actions — usado também na demonstração da defesa
+  workflow_dispatch:
+
+  # Oito execuções diárias, de 2 em 2 horas, 30 min antes de cada
+  # actualização agendada do Power BI. Horas em UTC; Moçambique é UTC+2,
+  # portanto 03:30 UTC = 05:30 local.
+  schedule:
+    - cron: '30 3,5,7,9,11,13,15,17 * * *'
+
+jobs:
+  etl:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Obter o código
+        uses: actions/checkout@v4
+
+      - name: Preparar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Instalar dependências
+        run: pip install -r requirements.txt
+
+      - name: Correr o pipeline
+        env:
+          ACTIVITYINFO_TOKEN: ${{ secrets.ACTIVITYINFO_TOKEN }}
+          DATABASE_URL:       ${{ secrets.DATABASE_URL }}
+          PSEUDONYM_SALT:     ${{ secrets.PSEUDONYM_SALT }}
+        working-directory: etl
+        run: python pipeline.py
