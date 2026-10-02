@@ -17,6 +17,11 @@ def _headers() -> dict:
             "ACTIVITYINFO_TOKEN não definido. Defina-o no .env (local) "
             "ou nos GitHub Secrets (automação)."
         )
+    if not config.ACTIVITYINFO_FORM_ID:
+        raise RuntimeError(
+            "ACTIVITYINFO_FORM_ID não definido. Defina-o no .env (local) "
+            "ou nos GitHub Secrets (automação)."
+        )
     auth = base64.b64encode(f"user:{config.ACTIVITYINFO_TOKEN}".encode()).decode()
     return {"Authorization": f"Basic {auth}"}
 

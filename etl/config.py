@@ -8,11 +8,16 @@ load_dotenv(Path(__file__).resolve().parent.parent / ".env")
 
 # ── Credenciais (nunca escrever valores aqui — só ler do ambiente) ──────────
 ACTIVITYINFO_TOKEN = os.environ.get("ACTIVITYINFO_TOKEN")
+ACTIVITYINFO_FORM_ID = os.environ.get("ACTIVITYINFO_FORM_ID")
 DATABASE_URL       = os.environ.get("DATABASE_URL")
 PSEUDONYM_SALT     = os.environ.get("PSEUDONYM_SALT", "")
 
-FORM_ID = "ck0nbfrmg0iku4c1hdk"
-API_URL = f"https://www.activityinfo.org/resources/query/v43/form/{FORM_ID}"
+# O identificador do formulário aponta directamente para os dados da organização,
+# pelo que é tratado como configuração sensível e não fica no código.
+API_URL = (
+    f"https://www.activityinfo.org/resources/query/v43/form/{ACTIVITYINFO_FORM_ID}"
+    if ACTIVITYINFO_FORM_ID else None
+)
 
 # ── Limiares de validação ───────────────────────────────────────────────────
 # Um pipeline que "corre bem" e traz zero registos é mais perigoso do que um

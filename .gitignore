@@ -11,3 +11,4 @@ venv/
 dados/
 extraccoes/
 .DS_Store
+.spyproject/

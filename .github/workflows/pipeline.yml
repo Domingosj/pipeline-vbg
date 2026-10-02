@@ -30,7 +30,8 @@ jobs:
 
       - name: Correr o pipeline
         env:
-          ACTIVITYINFO_TOKEN: ${{ secrets.ACTIVITYINFO_TOKEN }}
+          ACTIVITYINFO_TOKEN:   ${{ secrets.ACTIVITYINFO_TOKEN }}
+          ACTIVITYINFO_FORM_ID: ${{ secrets.ACTIVITYINFO_FORM_ID }}
           DATABASE_URL:       ${{ secrets.DATABASE_URL }}
           PSEUDONYM_SALT:     ${{ secrets.PSEUDONYM_SALT }}
         working-directory: etl
